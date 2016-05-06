@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ExtractData {
-	private String owner;
-	
-	private String db;
-	
 	private String tableName;
 	
 	private String datasid;
@@ -16,11 +12,9 @@ public class ExtractData {
 	
 	private List<ColumnData> columns = new ArrayList<ColumnData>();
 	
-	public ExtractData(String owner, String db, String tableName,
+	public ExtractData(String tableName,
 			String datasid, DML_TYPE opType) {
 		super();
-		this.owner = owner;
-		this.db = db;
 		this.tableName = tableName;
 		this.datasid = datasid;
 		this.opType = opType;
@@ -28,14 +22,6 @@ public class ExtractData {
 	
 	public void appendColumn(ColumnData column){
 		this.columns.add(column);
-	}
-
-	public String getOwner() {
-		return owner;
-	}
-
-	public String getDb() {
-		return db;
 	}
 
 	public String getTableName() {
@@ -65,18 +51,11 @@ public class ExtractData {
 		
 		private String newValue;
 		
-		private VALUE_TYPE valueType;
-		
-		public ColumnData(String name, VALUE_TYPE valueType, String oldValue, String newValue) {
+		public ColumnData(String name, String oldValue, String newValue) {
 			super();
 			this.name = name;
-			this.valueType = valueType;
 			this.oldValue = oldValue;
 			this.newValue = newValue;
-		}
-
-		public VALUE_TYPE getValueType() {
-			return valueType;
 		}
 
 		public String getName() {
@@ -89,10 +68,6 @@ public class ExtractData {
 
 		public String getNewValue() {
 			return newValue;
-		}
-		
-		public static enum VALUE_TYPE{
-			VARCHAR, TIMESTAMP
 		}
 	}
 }
