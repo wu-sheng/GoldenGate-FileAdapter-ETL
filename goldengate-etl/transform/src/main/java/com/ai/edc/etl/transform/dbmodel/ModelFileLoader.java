@@ -16,7 +16,7 @@ public class ModelFileLoader {
 
 	private static Models MODOLS = new Models();
 
-	public static void load() throws IOException {
+	public static void load() throws IOException, DBModelDefineExcetpion {
 		ResourcePatternResolver resolver = (ResourcePatternResolver) new PathMatchingResourcePatternResolver();
 		Resource[] resources = (Resource[]) resolver
 				.getResources(DMD_FILE_PATTERN);

@@ -9,7 +9,6 @@ import com.ai.edc.etl.transform.sync2mirror.ISync;
 
 @Component
 public class Transform implements IGotoTransform {
-	@Autowired
 	private ISync sync;
 
 	@Override
