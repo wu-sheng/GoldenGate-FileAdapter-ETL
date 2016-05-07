@@ -13,23 +13,5 @@
 	<url>http://maven.apache.org</url>
 	<packaging>jar</packaging>
 
-	<properties>
-		<project.spring.version>4.2.5.RELEASE</project.spring.version>
-		<project.log4j2.version>2.4.1</project.log4j2.version>
-	</properties>
-
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context-support</artifactId>
-			<version>${project.spring.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-core</artifactId>
-			<version>${project.log4j2.version}</version>
-		</dependency>
-	</dependencies>
 
 </project>
