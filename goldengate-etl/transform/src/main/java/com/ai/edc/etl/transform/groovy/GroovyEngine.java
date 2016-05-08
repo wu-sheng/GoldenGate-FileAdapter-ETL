@@ -14,22 +14,19 @@ public class GroovyEngine {
 		engine = manager.getEngineByName("groovy");
 	}
 
-	public static Object eval(String scriptName, String _retName, String... appendScriptLines)
-			throws GroovyScriptNotFoundExcetpion, GroovyScriptExecuteExcetpion {
+	public static Object eval(String scriptName, String _retName,
+			String... appendScriptLines) throws GroovyScriptNotFoundExcetpion,
+			GroovyScriptExecuteExcetpion {
+		Bindings binding = engine.createBindings();
 		try {
-			Bindings binding = engine.createBindings();
-			try {
-				engine.eval(
-						GroovyScriptLoader.getScript(scriptName, appendScriptLines),
-						binding);
-			} catch (ScriptException e) {
-				throw new GroovyScriptExecuteExcetpion(e.getMessage(), e);
-			}
-
-			return binding.get(_retName);
-		} catch (Exception e) {
+			engine.eval(
+					GroovyScriptLoader.getScript(scriptName, appendScriptLines),
+					binding);
+		} catch (ScriptException e) {
 			throw new GroovyScriptExecuteExcetpion(e.getMessage(), e);
 		}
+
+		return binding.get(_retName);
 	}
 
 	public static Object get(String script) {

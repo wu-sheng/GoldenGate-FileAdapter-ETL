@@ -8,14 +8,14 @@ import com.ai.edc.etl.transform.groovy.GroovyEngine;
 import com.ai.edc.etl.transform.groovy.GroovyScriptExecuteExcetpion;
 import com.ai.edc.etl.transform.groovy.GroovyScriptNotFoundExcetpion;
 
-public class JoinScript {
+public class JoinConfigScript {
 	@SuppressWarnings("unchecked")
-	public static ArrayList<String> getTransformDefine(String tableName)
+	static ArrayList<String> getTransformDefine(String tableName)
 			throws GroovyScriptNotFoundExcetpion, ScriptException, GroovyScriptExecuteExcetpion {
 		return (ArrayList<String>) GroovyEngine.eval(tableName + ".JOIN", "transform");
 	}
 	
-	public static String getPkMappingDefine(String tableName)
+	static String getPkMappingDefine(String tableName)
 			throws GroovyScriptNotFoundExcetpion, ScriptException, GroovyScriptExecuteExcetpion {
 		return (String) GroovyEngine.eval(tableName + ".JOIN", "pkmapping");
 	}

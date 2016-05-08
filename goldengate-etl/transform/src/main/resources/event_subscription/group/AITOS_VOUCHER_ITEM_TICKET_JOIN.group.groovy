@@ -1,8 +1,14 @@
+import com.ai.edc.common.utils.*;
+
 subscribeTag = ["isNightFlight"]
 subscribeData = ["money"]
 
 def group = {isNightFlight, money ->
-	return 1
+	if(StringUtil.isBlank(isNightFlight)){
+		return 1L
+	}else{
+		return 0L
+	}
 }
 
 groupTarget = "NightFlightNum"
