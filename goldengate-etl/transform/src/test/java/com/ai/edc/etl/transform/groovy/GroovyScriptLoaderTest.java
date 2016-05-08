@@ -13,7 +13,6 @@ public class GroovyScriptLoaderTest extends TestCase {
 	
 	public void testInit() throws IOException, GroovyScriptNotFoundExcetpion{
 		GroovyScriptLoader.load();
-		
 		System.out.println(GroovyScriptLoader.getScript("AITOS_VOUCHER_ITEM_TICKET.JOIN"));
 	}
 }

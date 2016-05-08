@@ -1,1 +1,1 @@
-def transform = ["columnName->tableName.columnName","columnName2->tableName.columnName2"]
+transform = ["columnName->tableName.columnName","columnName2->tableName.columnName2"]

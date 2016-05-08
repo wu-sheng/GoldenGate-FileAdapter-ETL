@@ -1,8 +1,6 @@
 package com.ai.edc.etl.transform.groovy;
 
-import groovy.lang.Binding;
-import groovy.util.GroovyScriptEngine;
-
+import javax.script.Bindings;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
@@ -16,23 +14,25 @@ public class GroovyEngine {
 		engine = manager.getEngineByName("groovy");
 	}
 
-	public static void eval(String scriptName, String... scriptLines)
+	public static Object eval(String scriptName, String _retName, String... appendScriptLines)
 			throws GroovyScriptNotFoundExcetpion, GroovyScriptExecuteExcetpion {
 		try {
-			GroovyScriptEngine gse = new GroovyScriptEngine(GroovyEngine.class
-					.getResource("/event_subscription/join").getPath());
-			Binding binding = new Binding();
-			gse.run("AITOS_VOUCHER_ITEM_TICKET.join.groovy", binding);
-			if (binding.hasVariable("transform")) {
-				Object o = binding.getVariable("transform");
-				System.out.println(o);
+			Bindings binding = engine.createBindings();
+			try {
+				engine.eval(
+						GroovyScriptLoader.getScript(scriptName, appendScriptLines),
+						binding);
+			} catch (ScriptException e) {
+				throw new GroovyScriptExecuteExcetpion(e.getMessage(), e);
 			}
+
+			return binding.get(_retName);
 		} catch (Exception e) {
 			throw new GroovyScriptExecuteExcetpion(e.getMessage(), e);
 		}
 	}
 
 	public static Object get(String script) {
-		return null;
+		return engine.get("transform");
 	}
 }
