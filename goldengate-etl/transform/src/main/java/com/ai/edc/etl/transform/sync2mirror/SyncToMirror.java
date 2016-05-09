@@ -14,7 +14,6 @@ import com.ai.edc.etl.bridge.extract2transform.ExtractData.ColumnData;
 import com.ai.edc.etl.transform.dbassist.PreparedStatementSetterAssist;
 import com.ai.edc.etl.transform.dbmodel.DBModel;
 import com.ai.edc.etl.transform.dbmodel.DBModel.ColumnType;
-import com.ai.edc.etl.transform.groovy.GroovyScriptLoader;
 
 @Component
 public class SyncToMirror implements ISync {
@@ -23,6 +22,10 @@ public class SyncToMirror implements ISync {
 	@Override
 	public void toDB(Connection mirrorConn, DBModel model, ExtractData data)
 			throws SQLException {
+		if (!model.isOriginTable()) {
+			throw new Sync2MirrorExcetpion("table[" + model.getTableName()
+					+ "] is not origin table. Can't be mirror.");
+		}
 		switch (data.getOpType()) {
 		case INSERT:
 			this.insert(mirrorConn, model, data);
@@ -103,7 +106,7 @@ public class SyncToMirror implements ISync {
 			}
 			updateSQL.append(pk + " = ?");
 		}
-		
+
 		logger.debug("begin to execute:{}", updateSQL);
 		try (PreparedStatement ps = mirrorConn.prepareStatement(updateSQL
 				.toString())) {
@@ -138,7 +141,7 @@ public class SyncToMirror implements ISync {
 			}
 			deleteSQL.append(column.getName() + " = ?");
 		}
-		
+
 		logger.debug("begin to execute:{}", deleteSQL);
 		try (PreparedStatement ps = mirrorConn.prepareStatement(deleteSQL
 				.toString())) {

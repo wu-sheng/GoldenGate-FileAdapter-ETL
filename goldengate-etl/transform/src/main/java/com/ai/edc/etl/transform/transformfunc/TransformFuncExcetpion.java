@@ -1,8 +1,8 @@
 package com.ai.edc.etl.transform.transformfunc;
 
-import javax.xml.transform.TransformerException;
+import com.ai.edc.etl.transform.TransformException;
 
-public class TransformFuncExcetpion extends TransformerException {
+public class TransformFuncExcetpion extends TransformException {
 	private static final long serialVersionUID = 1992770223874631569L;
 
 	

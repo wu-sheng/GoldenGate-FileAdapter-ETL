@@ -32,6 +32,10 @@ public class GroovyScriptLoader {
 		loadGroovy(TAG_FILE_PATTERN);
 		loadGroovy(GROUP_FILE_PATTERN);
 	}
+	
+	public static boolean hasScript(String scriptkey){
+		return SCRIPTS.containsKey(scriptkey);
+	}
 
 	public static String getScript(String scriptkey, String... scriptLines)
 			throws GroovyScriptNotFoundExcetpion {

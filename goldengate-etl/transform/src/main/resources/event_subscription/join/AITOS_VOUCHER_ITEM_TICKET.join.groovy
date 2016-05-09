@@ -5,4 +5,4 @@ transform = ["flight_date_exp_from->AITOS_VOUCHER_ITEM_TICKET_JOIN.flight_date_e
 	
 //columnValue=1->AITOS_VOUCHER_ITEM_TICKET_JOIN.flight_date_exp_to
 	
-pkmapping = "employee_number->_id"
+column4FindTarget = "employee_number"

@@ -11,14 +11,23 @@ import org.springframework.stereotype.Component;
 import com.ai.edc.common.datasource.DBConnector;
 import com.ai.edc.etl.bridge.extract2transform.ExtractData;
 import com.ai.edc.etl.bridge.extract2transform.IGotoTransform;
+import com.ai.edc.etl.transform.dbmodel.AutoScalingRowData;
 import com.ai.edc.etl.transform.dbmodel.DBModel;
 import com.ai.edc.etl.transform.dbmodel.ModelFileLoader;
+import com.ai.edc.etl.transform.join.IJoin;
 import com.ai.edc.etl.transform.sync2mirror.ISync;
+import com.ai.edc.etl.transform.transformfunc.IDataTrans;
 
 @Component
 public class Transform implements IGotoTransform {
 	@Autowired
 	private ISync sync;
+
+	@Autowired
+	private IDataTrans trans;
+
+	@Autowired
+	private IJoin join;
 
 	@Override
 	public void transform(ExtractData data) throws SQLException {
@@ -37,18 +46,27 @@ public class Transform implements IGotoTransform {
 			/**
 			 * 2.数据的编码转换
 			 */
+			AutoScalingRowData autoScalingRowData = trans.toTransform(model,
+					data);
 
-			/**
-			 * 3.join groovy
-			 */
+			DataSource ds2 = DBConnector.getDataSource("statistics");
+			try (Connection statisticsConn = ds2.getConnection()) {
+				/**
+				 * 3.join groovy
+				 */
+				AutoScalingRowData afterJoinAutoScalingRowData = join.join(
+						statisticsConn, model, autoScalingRowData);
 
-			/**
-			 * 4.tag groovy
-			 */
+				/**
+				 * 4.tag groovy
+				 */
 
-			/**
-			 * 5.group groovy
-			 */
+				/**
+				 * 5.group groovy
+				 */
+
+				statisticsConn.commit();
+			}
 
 			mirrorConn.commit();
 		}

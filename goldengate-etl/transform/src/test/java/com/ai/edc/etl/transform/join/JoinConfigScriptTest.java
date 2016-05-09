@@ -22,7 +22,7 @@ public class JoinConfigScriptTest extends TestCase {
 		System.out.println(JoinConfigScript.getTransformDefine("AITOS_VOUCHER_ITEM_TICKET"));
 	}
 	
-	public void testPkMappingDefine() throws IOException, GroovyScriptNotFoundExcetpion, ScriptException, GroovyScriptExecuteExcetpion{
-		System.out.println(JoinConfigScript.getPkMappingDefine("AITOS_VOUCHER_ITEM_TICKET"));
+	public void testColumn4FindTargetDefine() throws IOException, GroovyScriptNotFoundExcetpion, ScriptException, GroovyScriptExecuteExcetpion{
+		System.out.println(JoinConfigScript.getColumn4FindTargetDefine("AITOS_VOUCHER_ITEM_TICKET"));
 	}
 }

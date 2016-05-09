@@ -23,6 +23,8 @@ public class DBModel {
 	private List<String> tagDefineList = new ArrayList<String>();
 
 	private Map<String, String> tagDefineMap = new HashMap<String, String>();
+	
+	private boolean isOriginTable = true;
 
 	public DBModel(String tableName) {
 		super();
@@ -71,6 +73,16 @@ public class DBModel {
 		return mirror;
 	}
 
+	public boolean isOriginTable() {
+		return isOriginTable;
+	}
+
+	public void setOrigin(String isOrigin) {
+		if ("N".equals(mirror)) {
+			this.isOriginTable = false;
+		}
+	}
+
 	public void addTagDefine(String dmdKey, String index, String defineName,
 			String defineDesc) throws DBModelDefineExcetpion {
 		int idx = 0;
@@ -88,6 +100,10 @@ public class DBModel {
 		
 		tagDefineList.set(idx, defineName);
 		tagDefineMap.put(defineName, defineDesc);
+	}
+
+	public Map<String, IFunc> getValueTransform() {
+		return valueTransform;
 	}
 
 	public static enum ColumnType {

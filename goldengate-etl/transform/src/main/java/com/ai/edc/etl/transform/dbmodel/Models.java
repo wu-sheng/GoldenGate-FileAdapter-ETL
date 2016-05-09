@@ -50,6 +50,8 @@ public class Models {
 			}
 		} else if ("TABLE.MIRROR".equals(dmdKey)) {
 			model.setMirror(dmdValue);
+		} else if ("TABLE.ORIGIN".equals(dmdKey)) {
+			model.setOrigin(dmdValue);
 		} else if (dmdKey.startsWith("TABLE.TAG.")) {
 			String tagDefine = dmdKey.substring("TABLE.TAG.".length());
 			String[] tagDefineParts = tagDefine.split("\\.");
