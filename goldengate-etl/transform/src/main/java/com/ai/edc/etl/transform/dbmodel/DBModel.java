@@ -53,8 +53,12 @@ public class DBModel {
 		valueTransform.put(columnName, func);
 	}
 
-	public Map<String, ColumnType> getColumns() {
-		return columns;
+	public ColumnType getColumnType(String columnName) {
+		if(columns.containsKey(columnName)){
+			return columns.get(columnName);
+		}else{
+			throw new DBModelDefineExcetpion("columnName= " + columnName + " .type is not define.");
+		}
 	}
 
 	public void setMirror(String mirror) {
@@ -87,6 +91,6 @@ public class DBModel {
 	}
 
 	public static enum ColumnType {
-		STRING, DATE, NUMBER
+		STRING, DATE, LONG, INTEGER, NUMBER
 	}
 }

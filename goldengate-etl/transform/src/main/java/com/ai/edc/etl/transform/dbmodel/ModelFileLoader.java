@@ -32,4 +32,8 @@ public class ModelFileLoader {
 			}
 		}
 	}
+	
+	public static DBModel findModel(String tableName) throws DBModelDefineExcetpion {
+		return MODOLS.findModel(tableName);
+	}
 }

@@ -10,7 +10,16 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Models {
 	private ConcurrentHashMap<String, DBModel> CONTAINER = new ConcurrentHashMap<String, DBModel>();
 
-	public void addModel(String dmdFileName, InputStream is) throws IOException, DBModelDefineExcetpion {
+	public DBModel findModel(String tableName) throws DBModelDefineExcetpion {
+		if (CONTAINER.containsKey(tableName)) {
+			return CONTAINER.get(tableName);
+		} else{
+			throw new DBModelDefineExcetpion("table=" + tableName + " is not define.");
+		}
+	}
+
+	public void addModel(String dmdFileName, InputStream is)
+			throws IOException, DBModelDefineExcetpion {
 		Properties prop = new Properties();
 		prop.load(new InputStreamReader(is, "UTF-8"));
 
@@ -24,7 +33,8 @@ public class Models {
 		CONTAINER.put(model.getTableName(), model);
 	}
 
-	private void set(DBModel model, String dmdKey, String dmdValue) throws DBModelDefineExcetpion {
+	private void set(DBModel model, String dmdKey, String dmdValue)
+			throws DBModelDefineExcetpion {
 		dmdKey = dmdKey.toUpperCase();
 		if ("TABLE.PK".equals(dmdKey)) {
 			model.setPK(dmdValue);
@@ -44,7 +54,8 @@ public class Models {
 			String tagDefine = dmdKey.substring("TABLE.TAG.".length());
 			String[] tagDefineParts = tagDefine.split("\\.");
 			if (tagDefineParts.length == 2) {
-				model.addTagDefine(dmdKey, tagDefineParts[0], tagDefineParts[1], dmdValue);
+				model.addTagDefine(dmdKey, tagDefineParts[0],
+						tagDefineParts[1], dmdValue);
 			} else {
 				throw new DBModelDefineExcetpion(
 						"table.tag define illegal. table.tag.key=" + dmdKey);

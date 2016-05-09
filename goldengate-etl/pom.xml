@@ -16,6 +16,8 @@
 		<project.spring.version>4.2.5.RELEASE</project.spring.version>
 		<project.log4j2.version>2.4.1</project.log4j2.version>
 		<project.groovy.version>2.4.6</project.groovy.version>
+		<project.ojdbc.version>6</project.ojdbc.version>
+		<project.hikaricp.version>2.4.5</project.hikaricp.version>
 	</properties>
 
 	<dependencies>
@@ -35,6 +37,24 @@
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy-all</artifactId>
 			<version>${project.groovy.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.21</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
+			<version>${project.hikaricp.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.38</version>
 		</dependency>
 
 		<dependency>

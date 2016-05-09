@@ -1,6 +1,6 @@
 package com.ai.edc.etl.transform;
 
-public class TransformException extends Exception {
+public class TransformException extends RuntimeException {
 	private static final long serialVersionUID = 3019630795742120419L;
 
 	public TransformException(String errmsg){

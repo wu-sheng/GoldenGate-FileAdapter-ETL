@@ -1,7 +1,9 @@
 package com.ai.edc.etl.bridge.extract2transform;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ExtractData {
 	private String tableName;
@@ -11,6 +13,8 @@ public class ExtractData {
 	private DML_TYPE opType;
 	
 	private List<ColumnData> columns = new ArrayList<ColumnData>();
+	
+	public Map<String, ColumnData> columnsMap = new HashMap<String, ExtractData.ColumnData>();
 	
 	public ExtractData(String tableName,
 			String datasid, DML_TYPE opType) {
@@ -22,6 +26,7 @@ public class ExtractData {
 	
 	public void appendColumn(ColumnData column){
 		this.columns.add(column);
+		this.columnsMap.put(column.getName(), column);
 	}
 
 	public String getTableName() {
@@ -38,6 +43,13 @@ public class ExtractData {
 
 	public List<ColumnData> getColumns() {
 		return columns;
+	}
+	
+	public ColumnData getColumn(String columnName){
+		if(!columnName.contains(columnName)){
+			throw new RuntimeException("tableName=" + tableName + " don't define column=" + columnName);
+		}
+		return columnsMap.get(columnName);
 	}
 
 	public static enum DML_TYPE{
