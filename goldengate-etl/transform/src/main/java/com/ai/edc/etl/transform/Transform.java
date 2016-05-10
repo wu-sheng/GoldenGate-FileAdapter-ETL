@@ -14,6 +14,7 @@ import com.ai.edc.etl.bridge.extract2transform.IGotoTransform;
 import com.ai.edc.etl.transform.dbmodel.AutoScalingRowData;
 import com.ai.edc.etl.transform.dbmodel.DBModel;
 import com.ai.edc.etl.transform.dbmodel.ModelFileLoader;
+import com.ai.edc.etl.transform.group.IGroup;
 import com.ai.edc.etl.transform.join.IJoin;
 import com.ai.edc.etl.transform.sync2mirror.ISync;
 import com.ai.edc.etl.transform.tag.ITag;
@@ -32,6 +33,9 @@ public class Transform implements IGotoTransform {
 
 	@Autowired
 	private ITag tag;
+
+	@Autowired
+	private IGroup group;
 
 	@Override
 	public void transform(ExtractData data) throws SQLException {
@@ -70,6 +74,8 @@ public class Transform implements IGotoTransform {
 				/**
 				 * 5.group groovy
 				 */
+				group.group(statisticsConn, model, data, autoScalingRowData,
+						afterTagAutoScalingRowData);
 
 				statisticsConn.commit();
 			}

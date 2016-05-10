@@ -2,32 +2,31 @@ package com.ai.edc.etl.transform.group;
 
 import java.util.ArrayList;
 
-import javax.script.ScriptException;
-
 import com.ai.edc.etl.transform.groovy.GroovyEngine;
 import com.ai.edc.etl.transform.groovy.GroovyScriptExecuteExcetpion;
+import com.ai.edc.etl.transform.groovy.GroovyScriptLoader;
 import com.ai.edc.etl.transform.groovy.GroovyScriptNotFoundExcetpion;
 
 public class GroupConfigScript {
 	@SuppressWarnings("unchecked")
 	static ArrayList<String> getSubscribeTag(String tableName)
-			throws GroovyScriptNotFoundExcetpion, ScriptException, GroovyScriptExecuteExcetpion {
+			throws GroovyScriptNotFoundExcetpion, GroovyScriptExecuteExcetpion {
 		return (ArrayList<String>) GroovyEngine.eval(tableName + ".GROUP", "subscribeTag");
 	}
 	
 	@SuppressWarnings("unchecked")
 	static ArrayList<String> getSubscribeData(String tableName)
-			throws GroovyScriptNotFoundExcetpion, ScriptException, GroovyScriptExecuteExcetpion {
+			throws GroovyScriptNotFoundExcetpion, GroovyScriptExecuteExcetpion {
 		return (ArrayList<String>) GroovyEngine.eval(tableName + ".GROUP", "subscribeData");
 	}
 	
-	static String getGroupTarget(String tableName)
-			throws GroovyScriptNotFoundExcetpion, ScriptException, GroovyScriptExecuteExcetpion {
-		return (String) GroovyEngine.eval(tableName + ".GROUP", "groupTarget");
+	static boolean hasScript(String tableName){
+		return GroovyScriptLoader.hasScript(tableName + ".GROUP");
 	}
 	
-	static Long evalGroupFunc(String tableName, String... funcParams)
-			throws GroovyScriptNotFoundExcetpion, ScriptException,
+	@SuppressWarnings("unchecked")
+	static ArrayList<String> evalGroupFunc(String tableName, String... funcParams)
+			throws GroovyScriptNotFoundExcetpion,
 			GroovyScriptExecuteExcetpion {
 		String param = "";
 		if (funcParams.length > 0) {
@@ -44,6 +43,6 @@ public class GroupConfigScript {
 			param = paramBuilder.toString();
 		}
 		String evalLine = "_ret_group=group(" + param + ")";
-		return (Long) GroovyEngine.eval(tableName + ".GROUP", "_ret_group", evalLine);
+		return (ArrayList<String>) GroovyEngine.eval(tableName + ".GROUP", "_ret_group", evalLine);
 	}
 }

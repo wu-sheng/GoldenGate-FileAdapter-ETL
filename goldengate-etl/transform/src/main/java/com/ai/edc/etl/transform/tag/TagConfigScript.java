@@ -19,16 +19,12 @@ public class TagConfigScript {
 		return (Boolean) GroovyEngine.eval(tableName + ".TAG", "saveTag");
 	}
 	
-	static String getTagTarget(String tableName)
-			throws GroovyScriptNotFoundExcetpion, GroovyScriptExecuteExcetpion {
-		return ((String) GroovyEngine.eval(tableName + ".TAG", "tagTarget")).toUpperCase();
-	}
-	
 	static boolean hasScript(String tableName){
 		return GroovyScriptLoader.hasScript(tableName + ".TAG");
 	}
 	
-	static Boolean evalTagFunc(String tableName, String... funcParams)
+	@SuppressWarnings("unchecked")
+	static ArrayList<String> evalTagFunc(String tableName, String... funcParams)
 			throws GroovyScriptNotFoundExcetpion,
 			GroovyScriptExecuteExcetpion {
 		String param = "";
@@ -46,6 +42,6 @@ public class TagConfigScript {
 			param = paramBuilder.toString();
 		}
 		String evalLine = "_ret_tag=businessCheck(" + param + ")";
-		return (Boolean) GroovyEngine.eval(tableName + ".TAG", "_ret_tag", evalLine);
+		return (ArrayList<String>) GroovyEngine.eval(tableName + ".TAG", "_ret_tag", evalLine);
 	}
 }

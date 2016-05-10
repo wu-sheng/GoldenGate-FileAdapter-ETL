@@ -14,7 +14,7 @@ import com.ai.edc.etl.transform.dbmodel.DBModelDefineExcetpion;
 import com.ai.edc.etl.transform.dbmodel.ModelFileLoader;
 import com.ai.edc.etl.transform.groovy.GroovyScriptLoader;
 
-public class TestTransformMain extends TestCase{
+public class TestTableTransformMain extends TestCase{
 	public void testETL() throws DBModelDefineExcetpion, IOException, SQLException{
 		InstanceContainer.init("application-context.xml");
 		ModelFileLoader.load();

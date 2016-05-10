@@ -69,4 +69,11 @@ public class AutoScalingRowData {
 		throw new AutoScalingRowDataExcetpion("column[" + columnName
 				+ "] don't have a value");
 	}
+	
+	public String try2GetColumnValue(String columnName) {
+		if (_data.has(columnName)) {
+			return _data.get(columnName).getAsString();
+		}
+		return null;
+	}
 }

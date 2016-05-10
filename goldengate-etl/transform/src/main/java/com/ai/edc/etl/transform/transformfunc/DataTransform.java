@@ -36,8 +36,13 @@ public class DataTransform implements IDataTrans {
 			if (StringUtil.isBlank(_id)) {
 				_id = data.getColumn("_id").getOldValue();
 			}
-			_ret = new AutoScalingRowData(model.getTableName(), _id, data
-					.getColumn("_data").getNewValue(), data.getColumn("_tag").getNewValue());
+			String _data = data.getColumn("_data") == null ? "{}" : data
+					.getColumn("_data").getNewValue();
+			String _tag = data.getColumn("_tag") == null ? "[]" : data
+					.getColumn("_tag").getNewValue();
+			_ret = new AutoScalingRowData(model.getTableName(), _id, _data,
+					_tag);
+			_ret.setColumnValue("_ID", _id);
 		}
 
 		/**
@@ -53,7 +58,7 @@ public class DataTransform implements IDataTrans {
 						+ columnName + "] execute failure", e);
 			}
 		}
-		
+
 		return _ret;
 	}
 

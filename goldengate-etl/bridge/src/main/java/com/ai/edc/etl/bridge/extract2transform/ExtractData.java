@@ -45,8 +45,12 @@ public class ExtractData {
 		return columns;
 	}
 	
+	public boolean hasColumn(String columnName){
+		return columnsMap.containsKey(columnName);
+	}
+	
 	public ColumnData getColumn(String columnName){
-		if(!columnName.contains(columnName)){
+		if(!columnsMap.containsKey(columnName)){
 			throw new RuntimeException("tableName=" + tableName + " don't define column=" + columnName);
 		}
 		return columnsMap.get(columnName);

@@ -17,9 +17,8 @@ import com.ai.edc.etl.transform.dbmodel.DBModel;
 
 @Component
 public class JoinTable implements IJoin {
-	private static Logger logger = LogManager
-			.getLogger(JoinTable.class);
-	
+	private static Logger logger = LogManager.getLogger(JoinTable.class);
+
 	public AutoScalingRowData join(Connection statisticsConn, DBModel model,
 			AutoScalingRowData data) throws SQLException {
 		if (!JoinConfigScript.hasScript(model.getTableName())) {
@@ -29,16 +28,20 @@ public class JoinTable implements IJoin {
 
 		String pkColumnName = JoinConfigScript.getColumn4FindTargetDefine(model
 				.getTableName());
+		String finalTargetTableName = null;
+		String[] pkTargets = pkColumnName.split("\\.");
+		if (pkTargets.length == 2) {
+			finalTargetTableName = pkTargets[0];
+			pkColumnName = pkTargets[1];
+		}
 		String pk = data.getColumnValue(pkColumnName);
 
 		ArrayList<String> transformRules = JoinConfigScript
 				.getTransformDefine(model.getTableName());
 		if (CollectionUtil.isEmpty(transformRules)) {
-			throw new TableJoinExcetpion("table[" + model.getTableName()
-					+ "] transform rule is not define.");
+			logger.debug("table " + model.getTableName() + " has no transform rule");
 		}
 
-		String finalTargetTableName = null;
 		Map<String, String> columnNameMapping = new HashMap<String, String>();
 		for (String transformRule : transformRules) {
 			String[] rules = transformRule.split("->");
@@ -71,7 +74,7 @@ public class JoinTable implements IJoin {
 								+ model.getTableName()
 								+ "] transform rule["
 								+ transformRule
-								+ "] is illegal. targetTable is changed. prevTargetTable="
+								+ "] is illegal. targetTable is multi-declear. prevTargetTable or tablename of column4FindTarget is"
 								+ finalTargetTableName);
 			}
 

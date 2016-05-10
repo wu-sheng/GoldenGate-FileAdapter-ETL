@@ -1,6 +1,6 @@
-table.pk=rowvalue_id
+table.pk=_id
 
-table.column.rowvalue_id.type = string
+table.column._id.type = string
 table.column.remarks.type = string
 table.column.sts.type = String
 table.column.sts_time.type = date

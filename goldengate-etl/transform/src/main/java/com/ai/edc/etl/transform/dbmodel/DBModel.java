@@ -78,7 +78,7 @@ public class DBModel {
 	}
 
 	public void setOrigin(String isOrigin) {
-		if ("N".equals(mirror)) {
+		if ("N".equals(isOrigin)) {
 			this.isOriginTable = false;
 		}
 	}
