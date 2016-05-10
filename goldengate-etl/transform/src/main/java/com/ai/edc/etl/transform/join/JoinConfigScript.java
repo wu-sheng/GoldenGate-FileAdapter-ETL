@@ -16,7 +16,12 @@ public class JoinConfigScript {
 	
 	static String getColumn4FindTargetDefine(String tableName)
 			throws GroovyScriptNotFoundExcetpion, GroovyScriptExecuteExcetpion {
-		return (String) GroovyEngine.eval(tableName + ".JOIN", "column4FindTarget");
+		return ((String) GroovyEngine.eval(tableName + ".JOIN", "column4FindTarget")).toUpperCase();
+	}
+	
+	static Boolean getSaveJoinDefine(String tableName)
+			throws GroovyScriptNotFoundExcetpion, GroovyScriptExecuteExcetpion {
+		return ((Boolean) GroovyEngine.eval(tableName + ".JOIN", "saveJoin"));
 	}
 	
 	static boolean hasScript(String tableName){

@@ -22,7 +22,7 @@ public class DBModel {
 
 	private List<String> tagDefineList = new ArrayList<String>();
 
-	private Map<String, String> tagDefineMap = new HashMap<String, String>();
+	private Map<String, Integer> tagDefineMap = new HashMap<String, Integer>();
 	
 	private boolean isOriginTable = true;
 
@@ -99,7 +99,14 @@ public class DBModel {
 		}
 		
 		tagDefineList.set(idx, defineName);
-		tagDefineMap.put(defineName, defineDesc);
+		tagDefineMap.put(defineName, idx);
+	}
+	
+	public int findTagIndex(String tagName){
+		if(!tagDefineMap.containsKey(tagName)){
+			throw new DBModelDefineExcetpion("tag=" + tagName + " is not define.");
+		}
+		return tagDefineMap.get(tagName);
 	}
 
 	public Map<String, IFunc> getValueTransform() {

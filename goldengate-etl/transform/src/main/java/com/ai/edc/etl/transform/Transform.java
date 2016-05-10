@@ -16,6 +16,7 @@ import com.ai.edc.etl.transform.dbmodel.DBModel;
 import com.ai.edc.etl.transform.dbmodel.ModelFileLoader;
 import com.ai.edc.etl.transform.join.IJoin;
 import com.ai.edc.etl.transform.sync2mirror.ISync;
+import com.ai.edc.etl.transform.tag.ITag;
 import com.ai.edc.etl.transform.transformfunc.IDataTrans;
 
 @Component
@@ -28,6 +29,9 @@ public class Transform implements IGotoTransform {
 
 	@Autowired
 	private IJoin join;
+
+	@Autowired
+	private ITag tag;
 
 	@Override
 	public void transform(ExtractData data) throws SQLException {
@@ -60,6 +64,8 @@ public class Transform implements IGotoTransform {
 				/**
 				 * 4.tag groovy
 				 */
+				AutoScalingRowData afterTagAutoScalingRowData = tag.tag(
+						statisticsConn, model, afterJoinAutoScalingRowData);
 
 				/**
 				 * 5.group groovy

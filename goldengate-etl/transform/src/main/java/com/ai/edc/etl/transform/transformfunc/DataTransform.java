@@ -2,8 +2,6 @@ package com.ai.edc.etl.transform.transformfunc;
 
 import java.sql.SQLException;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import com.ai.edc.common.utils.StringUtil;
@@ -11,7 +9,6 @@ import com.ai.edc.etl.bridge.extract2transform.ExtractData;
 import com.ai.edc.etl.bridge.extract2transform.ExtractData.ColumnData;
 import com.ai.edc.etl.transform.dbmodel.AutoScalingRowData;
 import com.ai.edc.etl.transform.dbmodel.DBModel;
-import com.ai.edc.etl.transform.dbmodel.ModelFileLoader;
 
 @Component
 public class DataTransform implements IDataTrans {
@@ -28,7 +25,7 @@ public class DataTransform implements IDataTrans {
 				}
 				_id += pkValue + ",";
 			}
-			_ret = new AutoScalingRowData(model.getTableName(), _id);
+			_ret = new AutoScalingRowData(model.getTableName(), _id, false);
 
 			for (ColumnData columnData : data.getColumns()) {
 				_ret.setColumnValue(columnData.getName(),
@@ -39,8 +36,8 @@ public class DataTransform implements IDataTrans {
 			if (StringUtil.isBlank(_id)) {
 				_id = data.getColumn("_id").getOldValue();
 			}
-			_ret = new AutoScalingRowData(_id, data.getColumn("_data")
-					.getNewValue());
+			_ret = new AutoScalingRowData(model.getTableName(), _id, data
+					.getColumn("_data").getNewValue(), data.getColumn("_tag").getNewValue());
 		}
 
 		/**
@@ -48,15 +45,15 @@ public class DataTransform implements IDataTrans {
 		 */
 		for (String columnName : model.getValueTransform().keySet()) {
 			try {
-				String newValue = model.getValueTransform()
-						.get(columnName).transform(_ret.getColumnValue(columnName));
+				String newValue = model.getValueTransform().get(columnName)
+						.transform(_ret.getColumnValue(columnName));
 				_ret.setColumnValue(columnName, newValue);
 			} catch (Throwable e) {
 				throw new TransformFuncExcetpion("transformFunc for column ["
 						+ columnName + "] execute failure", e);
 			}
 		}
-
+		
 		return _ret;
 	}
 

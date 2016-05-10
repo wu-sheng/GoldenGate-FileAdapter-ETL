@@ -2,31 +2,34 @@ package com.ai.edc.etl.transform.tag;
 
 import java.util.ArrayList;
 
-import javax.script.ScriptException;
-
 import com.ai.edc.etl.transform.groovy.GroovyEngine;
 import com.ai.edc.etl.transform.groovy.GroovyScriptExecuteExcetpion;
+import com.ai.edc.etl.transform.groovy.GroovyScriptLoader;
 import com.ai.edc.etl.transform.groovy.GroovyScriptNotFoundExcetpion;
 
 public class TagConfigScript {
 	@SuppressWarnings("unchecked")
 	static ArrayList<String> getColumneName(String tableName)
-			throws GroovyScriptNotFoundExcetpion, ScriptException, GroovyScriptExecuteExcetpion {
+			throws GroovyScriptNotFoundExcetpion, GroovyScriptExecuteExcetpion {
 		return (ArrayList<String>) GroovyEngine.eval(tableName + ".TAG", "columneName");
 	}
 	
-	static String getTagTable(String tableName)
-			throws GroovyScriptNotFoundExcetpion, ScriptException, GroovyScriptExecuteExcetpion {
-		return (String) GroovyEngine.eval(tableName + ".GROUP", "tagTable");
+	static Boolean getSaveTagDefine(String tableName)
+			throws GroovyScriptNotFoundExcetpion, GroovyScriptExecuteExcetpion {
+		return (Boolean) GroovyEngine.eval(tableName + ".TAG", "saveTag");
 	}
 	
 	static String getTagTarget(String tableName)
-			throws GroovyScriptNotFoundExcetpion, ScriptException, GroovyScriptExecuteExcetpion {
-		return (String) GroovyEngine.eval(tableName + ".GROUP", "tagTarget");
+			throws GroovyScriptNotFoundExcetpion, GroovyScriptExecuteExcetpion {
+		return ((String) GroovyEngine.eval(tableName + ".TAG", "tagTarget")).toUpperCase();
 	}
 	
-	static Long evalTagFunc(String tableName, String... funcParams)
-			throws GroovyScriptNotFoundExcetpion, ScriptException,
+	static boolean hasScript(String tableName){
+		return GroovyScriptLoader.hasScript(tableName + ".TAG");
+	}
+	
+	static Boolean evalTagFunc(String tableName, String... funcParams)
+			throws GroovyScriptNotFoundExcetpion,
 			GroovyScriptExecuteExcetpion {
 		String param = "";
 		if (funcParams.length > 0) {
@@ -43,6 +46,6 @@ public class TagConfigScript {
 			param = paramBuilder.toString();
 		}
 		String evalLine = "_ret_tag=businessCheck(" + param + ")";
-		return (Long) GroovyEngine.eval(tableName + ".GROUP", "_ret_tag", evalLine);
+		return (Boolean) GroovyEngine.eval(tableName + ".TAG", "_ret_tag", evalLine);
 	}
 }
