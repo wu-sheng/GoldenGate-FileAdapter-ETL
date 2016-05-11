@@ -35,14 +35,14 @@ public class TagTable implements ITag {
 		for(String columnName : columnNames){
 			columnValues[index++] = data.getColumnValue(columnName.toUpperCase());
 		}
-		ArrayList<String> tagResults = TagConfigScript.evalTagFunc(tableName, columnValues);
+		String[] tagResults = TagConfigScript.evalTagFunc(tableName, columnValues);
 		
 		for(String tagResult : tagResults){
 			String[] tagAndResult = tagResult.split("=");
-			if(tagAndResult.length == 2){
-				throw new TableJoinExcetpion("table " + model.getTableName() + " businessCheck() return tagResult=" + tagResult + " is illegal.");
+			if(tagAndResult.length != 2){
+				throw new TableJoinExcetpion("table " + model.getTableName() + " businessCheck() return tagResult:" + tagResult + " is illegal.");
 			}
-			String tagName = tagAndResult[0];
+			String tagName = tagAndResult[0].toUpperCase();
 			int tagIdx = model.findTagIndex(tagName);
 			JsonArray tagArray = data.getTag();
 			while(tagIdx >= tagArray.size()){

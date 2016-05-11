@@ -24,7 +24,7 @@ public class TagConfigScript {
 	}
 	
 	@SuppressWarnings("unchecked")
-	static ArrayList<String> evalTagFunc(String tableName, String... funcParams)
+	static String[] evalTagFunc(String tableName, String... funcParams)
 			throws GroovyScriptNotFoundExcetpion,
 			GroovyScriptExecuteExcetpion {
 		String param = "";
@@ -42,6 +42,6 @@ public class TagConfigScript {
 			param = paramBuilder.toString();
 		}
 		String evalLine = "_ret_tag=businessCheck(" + param + ")";
-		return (ArrayList<String>) GroovyEngine.eval(tableName + ".TAG", "_ret_tag", evalLine);
+		return (String[]) GroovyEngine.eval(tableName + ".TAG", "_ret_tag", evalLine);
 	}
 }

@@ -57,6 +57,10 @@ public class AutoScalingRowData {
 	public JsonArray getTag() {
 		return _tag;
 	}
+	
+	public void insertComplete(){
+		this.beenInserted = true;
+	}
 
 	public void setColumnValue(String columnName, String columnValue) {
 		_data.addProperty(columnName, columnValue);

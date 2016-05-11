@@ -90,11 +90,11 @@ public class GroupTable implements IGroup {
 					.getColumnValue(dataColumnName);
 		}
 
-		ArrayList<String> groupResults = GroupConfigScript.evalGroupFunc(
+		String[] groupResults = GroupConfigScript.evalGroupFunc(
 				tableName, paramValues);
 		for (String groupResult : groupResults) {
 			String[] groupAndResult = groupResult.split("=");
-			if (groupAndResult.length == 2) {
+			if (groupAndResult.length != 2) {
 				throw new TableJoinExcetpion("table " + model.getTableName()
 						+ " group() return groupResult=[" + groupResult
 						+ "] is illegal.");

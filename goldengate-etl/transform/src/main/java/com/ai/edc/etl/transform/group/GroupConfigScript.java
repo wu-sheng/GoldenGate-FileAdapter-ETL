@@ -25,7 +25,7 @@ public class GroupConfigScript {
 	}
 	
 	@SuppressWarnings("unchecked")
-	static ArrayList<String> evalGroupFunc(String tableName, String... funcParams)
+	static String[] evalGroupFunc(String tableName, String... funcParams)
 			throws GroovyScriptNotFoundExcetpion,
 			GroovyScriptExecuteExcetpion {
 		String param = "";
@@ -43,6 +43,6 @@ public class GroupConfigScript {
 			param = paramBuilder.toString();
 		}
 		String evalLine = "_ret_group=group(" + param + ")";
-		return (ArrayList<String>) GroovyEngine.eval(tableName + ".GROUP", "_ret_group", evalLine);
+		return (String[]) GroovyEngine.eval(tableName + ".GROUP", "_ret_group", evalLine);
 	}
 }

@@ -57,6 +57,7 @@ public class AutoScalingRowDataProcessor {
 				ps.setString(3, data.getTag().toString());
 
 				ps.executeUpdate();
+				data.insertComplete();
 			}
 		}
 	}

@@ -1,12 +1,6 @@
 subscribeTag = ["isTestTag"]
 subscribeData = ["num"]
 
-def group = {isTestTag, num ->
-	groupResult = new String[1];
-	groupResult[0] = "numSum=" + groupNum(num)
-	return checkResult
-}
-
 def groupNum = {isTestTag, num ->
 	String[] oldNewTag = TagAssist.getChangeFlow(isTestTag);
 	String olgTag = oldNewTag[0]
@@ -19,4 +13,10 @@ def groupNum = {isTestTag, num ->
 	}else{
 		return 0L
 	}
+}
+
+def group = {isTestTag, num ->
+	groupResult = new String[1];
+	groupResult[0] = "numSum=" + groupNum(isTestTag, num)
+	return checkResult
 }
