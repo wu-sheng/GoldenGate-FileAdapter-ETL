@@ -44,7 +44,7 @@ public class Transform implements IGotoTransform {
 			String tableName = data.getTableName();// 根据表名称，定义不同的订阅模式
 			DBModel model = ModelFileLoader.findModel(tableName);
 
-			if (model.isMirror()) {
+			if (model.isOriginTable()) {
 				/**
 				 * 1.同步到镜像库
 				 */

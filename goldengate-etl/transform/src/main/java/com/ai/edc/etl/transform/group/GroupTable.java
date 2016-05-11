@@ -81,12 +81,13 @@ public class GroupTable implements IGroup {
 		}
 
 		for (String dataColumnName : dataColumnNames) {
-			String value = afterTagAutoScalingRowData
+			dataColumnName = dataColumnName.toUpperCase();
+			String value = autoScalingRowData
 					.try2GetColumnValue(dataColumnName);
 			if (value == null) {
-				afterTagAutoScalingRowData.setColumnValue(dataColumnName, "0");
+				autoScalingRowData.setColumnValue(dataColumnName, "0");
 			}
-			paramValues[index++] = afterTagAutoScalingRowData
+			paramValues[index++] = autoScalingRowData
 					.getColumnValue(dataColumnName);
 		}
 

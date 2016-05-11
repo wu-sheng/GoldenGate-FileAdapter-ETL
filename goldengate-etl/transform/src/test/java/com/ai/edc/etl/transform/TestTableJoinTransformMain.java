@@ -24,10 +24,10 @@ public class TestTableJoinTransformMain extends TestCase {
 		IGotoTransform trans = InstanceContainer.getBean(IGotoTransform.class);
 		ExtractData data = new ExtractData("TEST_TABLE_JOIN", null,
 				DML_TYPE.INSERT);
-		data.appendColumn(new ColumnData("_id", "1", "1"));
-		data.appendColumn(new ColumnData("_data", null,
+		data.appendColumn(new ColumnData("_ID", "1", "1"));
+		data.appendColumn(new ColumnData("_DATA", null,
 				"{'STS_TIME':'2016-5-1 16:42:19','STS':'Y','NUM':'100','REMARKS':'asdfsdf123'}"));
-		data.appendColumn(new ColumnData("_tag", "[\"N\"]", "[\"Y\"]"));
+		data.appendColumn(new ColumnData("_TAG", "[\"N\"]", "[\"Y\"]"));
 
 		// ExtractData data = new ExtractData("TEST_TABLE", null,
 		// DML_TYPE.UPDATE);

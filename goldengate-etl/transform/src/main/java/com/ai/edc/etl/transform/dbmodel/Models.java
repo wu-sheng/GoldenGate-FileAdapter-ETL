@@ -48,8 +48,6 @@ public class Models {
 						dmdKey.length() - ".TRANSFORM".length());
 				model.addColumnValueTransform(columnName, dmdValue);
 			}
-		} else if ("TABLE.MIRROR".equals(dmdKey)) {
-			model.setMirror(dmdValue);
 		} else if ("TABLE.ORIGIN".equals(dmdKey)) {
 			model.setOrigin(dmdValue);
 		} else if (dmdKey.startsWith("TABLE.TAG.")) {

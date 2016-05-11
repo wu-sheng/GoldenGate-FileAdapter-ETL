@@ -1,14 +1,12 @@
+import com.ai.edc.etl.transform.group.TagJudge
+
 subscribeTag = ["isTestTag"]
 subscribeData = ["num"]
 
 def groupNum = {isTestTag, num ->
-	String[] oldNewTag = TagAssist.getChangeFlow(isTestTag);
-	String olgTag = oldNewTag[0]
-	String newTag = oldNewTag[1]
-	
-	if("Y".equals(olgTag) && "N".equals(olgTag)){
+	if(TagJudge.isN2Y(isTestTag)){
 		return Long.parseLong(num);
-	}else if("Y".equals(olgTag) && "N".equals(olgTag)){
+	}else if(TagJudge.isY2N(isTestTag)){
 		return 0 - Long.parseLong(num);
 	}else{
 		return 0L
@@ -18,5 +16,5 @@ def groupNum = {isTestTag, num ->
 def group = {isTestTag, num ->
 	groupResult = new String[1];
 	groupResult[0] = "numSum=" + groupNum(isTestTag, num)
-	return checkResult
+	return groupResult
 }

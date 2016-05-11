@@ -32,14 +32,14 @@ public class DataTransform implements IDataTrans {
 						columnData.getNewValue());
 			}
 		} else {
-			String _id = data.getColumn("_id").getNewValue();
+			String _id = data.getColumn("_ID").getNewValue();
 			if (StringUtil.isBlank(_id)) {
-				_id = data.getColumn("_id").getOldValue();
+				_id = data.getColumn("_ID").getOldValue();
 			}
-			String _data = data.getColumn("_data") == null ? "{}" : data
-					.getColumn("_data").getNewValue();
-			String _tag = data.getColumn("_tag") == null ? "[]" : data
-					.getColumn("_tag").getNewValue();
+			String _data = data.getColumn("_DATA") == null ? "{}" : data
+					.getColumn("_DATA").getNewValue();
+			String _tag = data.getColumn("_TAG") == null ? "[]" : data
+					.getColumn("_TAG").getNewValue();
 			_ret = new AutoScalingRowData(model.getTableName(), _id, _data,
 					_tag);
 			_ret.setColumnValue("_ID", _id);

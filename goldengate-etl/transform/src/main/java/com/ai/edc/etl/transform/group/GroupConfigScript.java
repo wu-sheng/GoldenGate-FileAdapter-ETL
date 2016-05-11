@@ -24,7 +24,6 @@ public class GroupConfigScript {
 		return GroovyScriptLoader.hasScript(tableName + ".GROUP");
 	}
 	
-	@SuppressWarnings("unchecked")
 	static String[] evalGroupFunc(String tableName, String... funcParams)
 			throws GroovyScriptNotFoundExcetpion,
 			GroovyScriptExecuteExcetpion {

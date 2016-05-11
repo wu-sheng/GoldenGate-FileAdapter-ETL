@@ -18,8 +18,6 @@ public class DBModel {
 
 	private Map<String, IFunc> valueTransform = new HashMap<String, IFunc>();
 
-	private boolean mirror = false;
-
 	private List<String> tagDefineList = new ArrayList<String>();
 
 	private Map<String, Integer> tagDefineMap = new HashMap<String, Integer>();
@@ -61,16 +59,6 @@ public class DBModel {
 		}else{
 			throw new DBModelDefineExcetpion("columnName= " + columnName + " .type is not define.");
 		}
-	}
-
-	public void setMirror(String mirror) {
-		if ("Y".equals(mirror)) {
-			this.mirror = true;
-		}
-	}
-
-	public boolean isMirror() {
-		return mirror;
 	}
 
 	public boolean isOriginTable() {
