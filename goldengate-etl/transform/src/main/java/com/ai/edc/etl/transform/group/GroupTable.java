@@ -50,15 +50,19 @@ public class GroupTable implements IGroup {
 				.getSubscribeTag(tableName);
 		ArrayList<String> dataColumnNames = GroupConfigScript
 				.getSubscribeData(tableName);
+		boolean isSubscribeOldData = GroupConfigScript
+				.getSubscribeOldData(tableName);
 
-		String[] paramValues = new String[tagNames.size()
-				+ dataColumnNames.size()];
+		int paramValuesLength = tagNames.size() + dataColumnNames.size();
+		if (isSubscribeOldData) {
+			paramValuesLength += dataColumnNames.size();
+		}
+		String[] paramValues = new String[paramValuesLength];
 		int index = 0;
 		Gson gson = new Gson();
 		JsonArray oldTagValues = gson.fromJson(data.getColumn("_TAG")
 				.getOldValue(), JsonArray.class);
 
-		boolean isSubscribeTagValueChanged = false;
 		for (String tagName : tagNames) {
 			int tagIdx = model.findTagIndex(tagName.toUpperCase());
 			String newTagValue = autoScalingRowData.getTag().get(tagIdx)
@@ -66,18 +70,9 @@ public class GroupTable implements IGroup {
 			String tagValue = newTagValue;
 			if (oldTagValues.size() >= tagIdx) {
 				String oldTagValue = oldTagValues.get(tagIdx).getAsString();
-				if (!StringUtil.compareString(oldTagValue, newTagValue)) {
-					isSubscribeTagValueChanged = true;
-				}
 				tagValue = oldTagValue + "->" + newTagValue;
 			}
 			paramValues[index++] = tagValue;
-		}
-		if (!isSubscribeTagValueChanged) {
-			logger.debug("table "
-					+ model.getTableName()
-					+ " skip group step. Because subscribeTagValue of _TAG is not changed.");
-			return afterTagAutoScalingRowData;
 		}
 
 		for (String dataColumnName : dataColumnNames) {
@@ -90,9 +85,23 @@ public class GroupTable implements IGroup {
 			paramValues[index++] = autoScalingRowData
 					.getColumnValue(dataColumnName);
 		}
+		
+		if(isSubscribeOldData){
+			AutoScalingRowData oldAutoScalingRowData = this.getOldAutoScalingRowData(data);
+			for (String dataColumnName : dataColumnNames) {
+				dataColumnName = dataColumnName.toUpperCase();
+				String value = oldAutoScalingRowData
+						.try2GetColumnValue(dataColumnName);
+				if (value == null) {
+					oldAutoScalingRowData.setColumnValue(dataColumnName, "0");
+				}
+				paramValues[index++] = oldAutoScalingRowData
+						.getColumnValue(dataColumnName);
+			}
+		}
 
-		String[] groupResults = GroupConfigScript.evalGroupFunc(
-				tableName, paramValues);
+		String[] groupResults = GroupConfigScript.evalGroupFunc(tableName,
+				paramValues);
 		for (String groupResult : groupResults) {
 			String[] groupAndResult = groupResult.split("=");
 			if (groupAndResult.length != 2) {
@@ -100,7 +109,7 @@ public class GroupTable implements IGroup {
 						+ " group() return groupResult=[" + groupResult
 						+ "] is illegal.");
 			}
-			String targetColumnName = groupAndResult[0];
+			String targetColumnName = groupAndResult[0].toUpperCase();
 			Long newNum = null;
 			try {
 				newNum = Long.parseLong(groupAndResult[1]);
@@ -114,12 +123,14 @@ public class GroupTable implements IGroup {
 				try {
 					newNum += Long.parseLong(value);
 				} catch (NumberFormatException e) {
-					throw new TableGroupExcetpion("table[" + afterTagAutoScalingRowData.getTableName()
-							+ "] column[" + targetColumnName + "] is not long. value=" + value);
+					throw new TableGroupExcetpion("table["
+							+ afterTagAutoScalingRowData.getTableName()
+							+ "] column[" + targetColumnName
+							+ "] is not long. value=" + value);
 				}
 			}
-			afterTagAutoScalingRowData
-					.setColumnValue(targetColumnName, "" + newNum);
+			afterTagAutoScalingRowData.setColumnValue(targetColumnName, ""
+					+ newNum);
 
 		}
 
@@ -130,5 +141,22 @@ public class GroupTable implements IGroup {
 				afterTagAutoScalingRowData);
 
 		return afterTagAutoScalingRowData;
+	}
+	
+	private AutoScalingRowData getOldAutoScalingRowData(ExtractData data){
+		AutoScalingRowData _ret;
+		String _id = data.getColumn("_ID").getOldValue();
+		if (StringUtil.isBlank(_id)) {
+			_id = data.getColumn("_ID").getNewValue();
+		}
+		String _data = data.getColumn("_DATA") == null ? "{}" : data
+				.getColumn("_DATA").getOldValue();
+		String _tag = data.getColumn("_TAG") == null ? "[]" : data
+				.getColumn("_TAG").getOldValue();
+		_ret = new AutoScalingRowData(data.getTableName(), _id, _data,
+				_tag);
+		_ret.setColumnValue("_ID", _id);
+		
+		return _ret;
 	}
 }

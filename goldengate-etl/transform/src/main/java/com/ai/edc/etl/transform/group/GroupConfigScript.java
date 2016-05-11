@@ -20,6 +20,11 @@ public class GroupConfigScript {
 		return (ArrayList<String>) GroovyEngine.eval(tableName + ".GROUP", "subscribeData");
 	}
 	
+	static Boolean getSubscribeOldData(String tableName)
+			throws GroovyScriptNotFoundExcetpion, GroovyScriptExecuteExcetpion {
+		return (Boolean) GroovyEngine.eval(tableName + ".GROUP", "subscribeOldData");
+	}
+	
 	static boolean hasScript(String tableName){
 		return GroovyScriptLoader.hasScript(tableName + ".GROUP");
 	}

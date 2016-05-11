@@ -2,6 +2,6 @@ table.pk=_id
 
 table.column._id.type = string
 table.column.departId.type = string
-table.column.numSum.type = string
+table.column.departSum.type = string
 
 table.origin=N

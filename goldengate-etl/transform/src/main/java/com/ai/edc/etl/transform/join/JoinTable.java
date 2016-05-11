@@ -29,11 +29,6 @@ public class JoinTable implements IJoin {
 		String pkColumnName = JoinConfigScript.getColumn4FindTargetDefine(model
 				.getTableName());
 		String finalTargetTableName = null;
-		String[] pkTargets = pkColumnName.split("\\.");
-		if (pkTargets.length == 2) {
-			finalTargetTableName = pkTargets[0];
-			pkColumnName = pkTargets[1];
-		}
 		String pk = data.getColumnValue(pkColumnName);
 
 		ArrayList<String> transformRules = JoinConfigScript

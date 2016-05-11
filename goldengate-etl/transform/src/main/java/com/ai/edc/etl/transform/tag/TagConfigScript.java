@@ -23,7 +23,6 @@ public class TagConfigScript {
 		return GroovyScriptLoader.hasScript(tableName + ".TAG");
 	}
 	
-	@SuppressWarnings("unchecked")
 	static String[] evalTagFunc(String tableName, String... funcParams)
 			throws GroovyScriptNotFoundExcetpion,
 			GroovyScriptExecuteExcetpion {

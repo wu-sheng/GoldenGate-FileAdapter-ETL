@@ -2,6 +2,7 @@ import com.ai.edc.etl.transform.group.TagJudge
 
 subscribeTag = ["isTestTag"]
 subscribeData = ["num"]
+subscribeOldData = false
 
 def groupNum = {isTestTag, num ->
 	if(TagJudge.isN2Y(isTestTag)){

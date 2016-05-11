@@ -1,5 +1,5 @@
-transform = []
+transform = ["remarks->TEST_TABLE_STAT.departId"]
 	
-column4FindTarget = "TEST_TABLE_STAT._id"
+column4FindTarget = "_id"
 
 saveJoin=true
