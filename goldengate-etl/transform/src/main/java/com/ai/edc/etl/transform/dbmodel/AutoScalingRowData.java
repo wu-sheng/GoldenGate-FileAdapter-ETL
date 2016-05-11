@@ -74,10 +74,14 @@ public class AutoScalingRowData {
 				+ "] don't have a value");
 	}
 	
+	public boolean hasColumnValue(String columnName){
+		return _data.has(columnName);
+	}
+	
 	public String try2GetColumnValue(String columnName) {
 		if (_data.has(columnName)) {
 			return _data.get(columnName).getAsString();
 		}
-		return null;
+		return "";
 	}
 }

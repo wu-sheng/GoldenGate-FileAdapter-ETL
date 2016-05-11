@@ -50,6 +50,9 @@ public class DataTransform implements IDataTrans {
 		 */
 		for (String columnName : model.getValueTransform().keySet()) {
 			try {
+				if(!_ret.hasColumnValue(columnName)){
+					continue;
+				}
 				String newValue = model.getValueTransform().get(columnName)
 						.transform(_ret.getColumnValue(columnName));
 				_ret.setColumnValue(columnName, newValue);

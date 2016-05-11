@@ -34,7 +34,7 @@ public class TagTable implements ITag {
 		String[] columnValues = new String[columnNames.size()];
 		int index = 0;
 		for(String columnName : columnNames){
-			columnValues[index++] = data.getColumnValue(columnName.toUpperCase());
+			columnValues[index++] = data.try2GetColumnValue(columnName.toUpperCase());
 		}
 		String[] tagResults = TagConfigScript.evalTagFunc(tableName, columnValues);
 		

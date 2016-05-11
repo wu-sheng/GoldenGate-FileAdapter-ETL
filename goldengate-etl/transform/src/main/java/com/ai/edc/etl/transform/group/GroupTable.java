@@ -79,11 +79,11 @@ public class GroupTable implements IGroup {
 			dataColumnName = dataColumnName.toUpperCase();
 			String value = autoScalingRowData
 					.try2GetColumnValue(dataColumnName);
-			if (value == null) {
+			if ("".equals(value)) {
 				autoScalingRowData.setColumnValue(dataColumnName, "0");
 			}
 			paramValues[index++] = autoScalingRowData
-					.getColumnValue(dataColumnName);
+					.try2GetColumnValue(dataColumnName);
 		}
 		
 		if(isSubscribeOldData){
@@ -92,11 +92,11 @@ public class GroupTable implements IGroup {
 				dataColumnName = dataColumnName.toUpperCase();
 				String value = oldAutoScalingRowData
 						.try2GetColumnValue(dataColumnName);
-				if (value == null) {
+				if ("".equals(value)) {
 					oldAutoScalingRowData.setColumnValue(dataColumnName, "0");
 				}
 				paramValues[index++] = oldAutoScalingRowData
-						.getColumnValue(dataColumnName);
+						.try2GetColumnValue(dataColumnName);
 			}
 		}
 
@@ -119,7 +119,7 @@ public class GroupTable implements IGroup {
 			}
 			String value = afterTagAutoScalingRowData
 					.try2GetColumnValue(targetColumnName);
-			if (value != null) {
+			if (!"".equals(value)) {
 				try {
 					newNum += Long.parseLong(value);
 				} catch (NumberFormatException e) {

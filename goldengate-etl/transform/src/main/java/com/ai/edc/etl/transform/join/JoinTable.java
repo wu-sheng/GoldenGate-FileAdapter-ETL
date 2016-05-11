@@ -102,8 +102,10 @@ public class JoinTable implements IJoin {
 			String sourceColumnNameUpper = sourceColumnName.toUpperCase();
 			String targetColumnName = columnNameMapping.get(sourceColumnName)
 					.toUpperCase();
-			targetData.setColumnValue(targetColumnName,
-					data.getColumnValue(sourceColumnNameUpper));
+			if(data.hasColumnValue(sourceColumnNameUpper)){
+				targetData.setColumnValue(targetColumnName,
+						data.getColumnValue(sourceColumnNameUpper));
+			}
 		}
 
 		if (JoinConfigScript.getSaveJoinDefine(model.getTableName())) {
