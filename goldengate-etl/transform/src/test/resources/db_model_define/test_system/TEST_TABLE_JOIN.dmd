@@ -6,8 +6,6 @@ table.column.sts.type = String
 table.column.sts_time.type = date
 table.column.num.type = number
 
-table.mirror=N
-
 table.origin=N
 
 table.tag.0.isTestTag=测试用标签

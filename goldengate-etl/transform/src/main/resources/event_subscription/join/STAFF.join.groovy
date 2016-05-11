@@ -1,1 +1,0 @@
-transform = ["columnName->tableName.columnName","columnName2->tableName.columnName2"]

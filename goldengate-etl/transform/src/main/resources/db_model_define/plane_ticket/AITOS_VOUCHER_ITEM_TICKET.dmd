@@ -63,6 +63,4 @@ table.column.flight_time_exp_to.transform=HourFormat
 table.column.is_urgent_book.transform=Zero2N
 table.column.employee_type.transform=Zero2N
 
-table.mirror=Y
-
-table.tag.0.isNightFlight=是否夜间飞行
+table.origin=Y
