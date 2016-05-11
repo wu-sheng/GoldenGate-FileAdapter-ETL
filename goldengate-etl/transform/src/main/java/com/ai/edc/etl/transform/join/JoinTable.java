@@ -39,7 +39,8 @@ public class JoinTable implements IJoin {
 		ArrayList<String> transformRules = JoinConfigScript
 				.getTransformDefine(model.getTableName());
 		if (CollectionUtil.isEmpty(transformRules)) {
-			logger.debug("table " + model.getTableName() + " has no transform rule");
+			logger.debug("table " + model.getTableName()
+					+ " has no transform rule");
 		}
 
 		Map<String, String> columnNameMapping = new HashMap<String, String>();
@@ -54,17 +55,32 @@ public class JoinTable implements IJoin {
 								+ "] is illegal. usage: column->targetTable.targetColumn");
 			}
 			String[] targets = rules[1].split("\\.");
-			if (targets.length != 2) {
+			String targetTableName = targets[0];
+			String targetColumnName = targets[1];
+			if (targets.length == 1) {
+				if (finalTargetTableName == null) {
+					throw new TableJoinExcetpion(
+							"table["
+									+ model.getTableName()
+									+ "] transform rule["
+									+ transformRule
+									+ "] is illegal. target only use targetColumn, only if column4FindTarget contains targetTable");
+				}else{
+					targetTableName = finalTargetTableName;
+					targetColumnName = targets[0];
+				}
+			} else if (targets.length != 2) {
 				throw new TableJoinExcetpion(
 						"table["
 								+ model.getTableName()
 								+ "] transform rule["
 								+ transformRule
 								+ "] is illegal. target usage: targetTable.targetColumn");
+			} else {
+				targetTableName = targets[0];
+				targetColumnName = targets[1];
 			}
 			String sourceColumnName = rules[0];
-			String targetTableName = targets[0];
-			String targetColumnName = targets[1];
 
 			if (finalTargetTableName == null) {
 				finalTargetTableName = targetTableName;

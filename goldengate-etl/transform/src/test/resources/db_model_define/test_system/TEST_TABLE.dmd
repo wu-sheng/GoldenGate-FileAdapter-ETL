@@ -8,8 +8,5 @@ table.column.num.type = number
 
 table.column.sts.transform=Zero2N
 
-table.mirror=Y
-
 table.origin=Y
 
-table.tag.0.isTestTag=测试用标签

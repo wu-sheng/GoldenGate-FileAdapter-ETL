@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import com.ai.edc.etl.transform.dbassist.AutoScalingRowDataProcessor;
 import com.ai.edc.etl.transform.dbmodel.AutoScalingRowData;
 import com.ai.edc.etl.transform.dbmodel.DBModel;
+import com.ai.edc.etl.transform.dbmodel.ModelFileLoader;
 import com.ai.edc.etl.transform.join.TableJoinExcetpion;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonPrimitive;
@@ -37,13 +38,15 @@ public class TagTable implements ITag {
 		}
 		String[] tagResults = TagConfigScript.evalTagFunc(tableName, columnValues);
 		
+		DBModel targetDBModel = ModelFileLoader.findModel(data.getTableName());
+		
 		for(String tagResult : tagResults){
 			String[] tagAndResult = tagResult.split("=");
 			if(tagAndResult.length != 2){
 				throw new TableJoinExcetpion("table " + model.getTableName() + " businessCheck() return tagResult:" + tagResult + " is illegal.");
 			}
 			String tagName = tagAndResult[0].toUpperCase();
-			int tagIdx = model.findTagIndex(tagName);
+			int tagIdx = targetDBModel.findTagIndex(tagName);
 			JsonArray tagArray = data.getTag();
 			while(tagIdx >= tagArray.size()){
 				tagArray.add("");
