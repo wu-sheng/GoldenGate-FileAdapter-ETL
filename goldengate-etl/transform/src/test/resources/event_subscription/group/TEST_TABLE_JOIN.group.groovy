@@ -2,7 +2,7 @@ import com.ai.edc.etl.transform.group.TagJudge
 
 subscribeTag = ["isTestTag"]
 subscribeData = ["num"]
-subscribeOldData = false
+subscribeOldData = true
 
 def groupNum = {isTestTag, num ->
 	if(TagJudge.isN2Y(isTestTag)){
@@ -14,8 +14,13 @@ def groupNum = {isTestTag, num ->
 	}
 }
 
-def group = {isTestTag, num ->
+def group = {isTestTag, num, old_num ->
 	groupResult = new String[1];
-	groupResult[0] = "numSum=" + groupNum(isTestTag, num)
+	if("".equals(num)){
+		long oldValue = 0L - Long.parseLong(old_num);
+		groupResult[0] = "numSum=" + oldValue
+	}else{
+		groupResult[0] = "numSum=" + groupNum(isTestTag, num)
+	}
 	return groupResult
 }

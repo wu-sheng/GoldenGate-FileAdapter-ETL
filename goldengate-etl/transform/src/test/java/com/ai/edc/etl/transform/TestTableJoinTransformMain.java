@@ -22,12 +22,12 @@ public class TestTableJoinTransformMain extends TestCase {
 		GroovyScriptLoader.load();
 
 		IGotoTransform trans = InstanceContainer.getBean(IGotoTransform.class);
-		ExtractData data = new ExtractData("TEST_TABLE_JOIN", null,
-				DML_TYPE.INSERT);
-		data.appendColumn(new ColumnData("_ID", "1", "1"));
-		data.appendColumn(new ColumnData("_DATA", null,
-				"{'STS_TIME':'2016-5-1 16:42:19','STS':'Y','NUM':'100','REMARKS':'asdfsdf123'}"));
-		data.appendColumn(new ColumnData("_TAG", "[\"N\"]", "[\"Y\"]"));
+//		ExtractData data = new ExtractData("TEST_TABLE_JOIN", null,
+//				DML_TYPE.INSERT);
+//		data.appendColumn(new ColumnData("_ID", "1", "1"));
+//		data.appendColumn(new ColumnData("_DATA", null,
+//				"{'STS_TIME':'2016-5-1 16:42:19','STS':'Y','NUM':'100','REMARKS':'asdfsdf123'}"));
+//		data.appendColumn(new ColumnData("_TAG", "[\"N\"]", "[\"Y\"]"));
 
 		// ExtractData data = new ExtractData("TEST_TABLE", null,
 		// DML_TYPE.UPDATE);
@@ -37,6 +37,14 @@ public class TestTableJoinTransformMain extends TestCase {
 		// data.appendColumn(new ColumnData("STS_TIME", null,
 		// "2016-5-1 16:42:19"));
 		// data.appendColumn(new ColumnData("NUM", null, "100"));
+		
+		ExtractData data = new ExtractData("TEST_TABLE_JOIN", null,
+				DML_TYPE.DELETE);
+		data.appendColumn(new ColumnData("_ID", "1", null));
+		data.appendColumn(new ColumnData("_DATA", "{'STS_TIME':'2016-5-1 16:42:19','STS':'Y','NUM':'100','REMARKS':'asdfsdf123'}",
+				"{'STS_TIME':null,'STS':null,'NUM':null,'REMARKS':null}"));
+		data.appendColumn(new ColumnData("_TAG", "[\"Y\"]", "[\"N\"]"));
+		
 		trans.transform(data);
 	}
 }
