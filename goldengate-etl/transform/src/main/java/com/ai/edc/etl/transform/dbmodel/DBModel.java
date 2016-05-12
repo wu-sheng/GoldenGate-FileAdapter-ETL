@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.ai.edc.common.container.InstanceContainer;
 import com.ai.edc.etl.transform.transformfunc.IFunc;
@@ -37,6 +38,10 @@ public class DBModel {
 	public void addColumn(String columnName, String dmdValue) {
 		ColumnType columnType = ColumnType.valueOf(dmdValue.toUpperCase());
 		columns.put(columnName, columnType);
+	}
+	
+	public Set<String> getColumns(){
+		return columns.keySet();
 	}
 
 	public String getTableName() {

@@ -23,7 +23,7 @@ public class GroovyEngine {
 					GroovyScriptLoader.getScript(scriptName, appendScriptLines),
 					binding);
 		} catch (ScriptException e) {
-			throw new GroovyScriptExecuteExcetpion(e.getMessage(), e);
+			throw new GroovyScriptExecuteExcetpion(scriptName + " execute failure. " + e.getMessage(), e);
 		}
 
 		return binding.get(_retName);

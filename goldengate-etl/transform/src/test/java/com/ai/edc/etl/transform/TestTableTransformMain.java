@@ -30,12 +30,16 @@ public class TestTableTransformMain extends TestCase{
 		data.appendColumn(new ColumnData("NUM", null, "100"));
 		*/
 		
-		ExtractData data = new ExtractData("TEST_TABLE", null, DML_TYPE.UPDATE);
-		data.appendColumn(new ColumnData("ROWVALUE_ID", null, "1"));
-		data.appendColumn(new ColumnData("REMARKS", null, "asdfsdf123"));
-		data.appendColumn(new ColumnData("STS", null, "1"));
-		data.appendColumn(new ColumnData("STS_TIME", null, "2016-5-1 16:42:19"));
-		data.appendColumn(new ColumnData("NUM", null, "100"));
+//		ExtractData data = new ExtractData("TEST_TABLE", null, DML_TYPE.UPDATE);
+//		data.appendColumn(new ColumnData("ROWVALUE_ID", null, "1"));
+//		data.appendColumn(new ColumnData("REMARKS", null, "asdfsdf123"));
+//		data.appendColumn(new ColumnData("STS", null, "1"));
+//		data.appendColumn(new ColumnData("STS_TIME", null, "2016-5-1 16:42:19"));
+//		data.appendColumn(new ColumnData("NUM", null, "100"));
+//		trans.transform(data);
+		
+		ExtractData data = new ExtractData("TEST_TABLE", null, DML_TYPE.DELETE);
+		data.appendColumn(new ColumnData("ROWVALUE_ID", "1", null));
 		trans.transform(data);
 	}
 }

@@ -3,6 +3,8 @@ package com.ai.edc.etl.transform.dbmodel;
 import com.ai.edc.common.utils.StringUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 
 public class AutoScalingRowData {
@@ -68,7 +70,12 @@ public class AutoScalingRowData {
 
 	public String getColumnValue(String columnName) {
 		if (_data.has(columnName)) {
-			return _data.get(columnName).getAsString();
+			JsonElement valueElement = _data.get(columnName);
+			if(valueElement instanceof JsonNull){
+				return null;
+			}else{
+				return valueElement.getAsString();
+			}
 		}
 		throw new AutoScalingRowDataExcetpion("column[" + columnName
 				+ "] don't have a value");
@@ -80,7 +87,12 @@ public class AutoScalingRowData {
 	
 	public String try2GetColumnValue(String columnName) {
 		if (_data.has(columnName)) {
-			return _data.get(columnName).getAsString();
+			JsonElement valueElement = _data.get(columnName);
+			if(valueElement instanceof JsonNull){
+				return null;
+			}else{
+				return valueElement.getAsString();
+			}
 		}
 		return "";
 	}

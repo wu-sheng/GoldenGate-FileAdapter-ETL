@@ -130,7 +130,7 @@ public class SyncToMirror implements ISync {
 	public void delete(Connection mirrorConn, DBModel model, ExtractData data)
 			throws SQLException {
 		StringBuilder deleteSQL = new StringBuilder("delete from "
-				+ data.getTableName() + "_MIRROR where");
+				+ data.getTableName() + "_MIRROR where ");
 
 		boolean firstLoop = true;
 		for (ColumnData column : data.getColumns()) {

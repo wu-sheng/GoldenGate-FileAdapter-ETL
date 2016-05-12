@@ -42,6 +42,9 @@ public class GroupConfigScript {
 				} else {
 					paramBuilder.append(",");
 				}
+				if(funcParam == null){
+					funcParam = "";
+				}
 				paramBuilder.append("'" + funcParam + "'");
 			}
 			param = paramBuilder.toString();
