@@ -21,14 +21,12 @@ public class TestTableTransformMain extends TestCase{
 		GroovyScriptLoader.load();
 		
 		IGotoTransform trans = InstanceContainer.getBean(IGotoTransform.class);
-		/*INSERT
-		ExtractData data = new ExtractData("TEST_TABLE", null, DML_TYPE.INSERT);
-		data.appendColumn(new ColumnData("ROWVALUE_ID", null, "1"));
-		data.appendColumn(new ColumnData("REMARKS", null, "asdfsdf"));
-		data.appendColumn(new ColumnData("STS", null, "1"));
-		data.appendColumn(new ColumnData("STS_TIME", null, "2016-5-1 16:40:19"));
-		data.appendColumn(new ColumnData("NUM", null, "100"));
-		*/
+//		ExtractData data = new ExtractData("TEST_TABLE", null, DML_TYPE.INSERT);
+//		data.appendColumn(new ColumnData("ROWVALUE_ID", null, "1"));
+//		data.appendColumn(new ColumnData("REMARKS", null, "asdfsdf"));
+//		data.appendColumn(new ColumnData("STS", null, "1"));
+//		data.appendColumn(new ColumnData("STS_TIME", null, "2016-5-1 16:40:19"));
+//		data.appendColumn(new ColumnData("NUM", null, "100"));
 		
 //		ExtractData data = new ExtractData("TEST_TABLE", null, DML_TYPE.UPDATE);
 //		data.appendColumn(new ColumnData("ROWVALUE_ID", null, "1"));
